@@ -13,8 +13,11 @@ exports.create = (req, res) => {
     const item = {
         name: req.body.name,
         description: req.body.description,
+        brand: req.body.brand,
         quantity: req.body.quantity,
-        isFlammable: req.body.isFlammable ? req.body.isFlammable : false
+        value: req.body.quantity,
+        isNew: req.body.isNew ? req.body.isNew : false,
+        isManual: req.body.isManual ? req.body.isManual : false
     };
 
     Item.create(item)
@@ -24,7 +27,7 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Algum erro ocorreu ao tentar criar o item."
+          err.message || "Algum erro ocorreu ao tentar adicionar/criar este veículo no sistema."
       });
     });
 };
@@ -40,7 +43,7 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Algum erro ocorreu ao tentar pesquisar os itens."
+            err.message || "Algum erro ocorreu ao tentar pesquisar os veículos."
         });
       });
 };
@@ -54,13 +57,13 @@ exports.findOne = (req, res) => {
           res.send(data);
         } else {
           res.status(404).send({
-            message: `Não foi possível encontrar o item com o id=${id}.`
+            message: `Não foi possível encontrar o veículo de id=${id}.`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Algum erro ocorreu ao tentar encontrar o item com o id=" + id
+          message: "Algum erro ocorreu ao tentar encontrar o veículo de id=" + id
         });
       });
 };
@@ -74,17 +77,17 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "O item foi atualizado."
+            message: "O veículo foi atualizado."
           });
         } else {
           res.send({
-            message: `Não foi possivel atualizar o item com o id=${id}.`
+            message: `Não foi possivel atualizar o veículo de id=${id}.`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Algum erro ocorreu ao tentar atualizar o item com o id=" + id
+          message: "Algum erro ocorreu ao tentar atualizar o item de id=" + id
         });
       });
 };
@@ -98,17 +101,17 @@ exports.delete = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "O item foi apagado com sucesso."
+            message: "O veículo foi apagado com sucesso."
           });
         } else {
           res.send({
-            message: `Não foi possivel apagar o item com o id=${id}.`
+            message: `Não foi possivel apagar o veículo de id=${id}.`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Algum erro ocorreu ao tentar apagar o item com o id=" + id
+          message: "Algum erro ocorreu ao tentar apagar o veículo de id=" + id
         });
       });
 };
@@ -119,25 +122,38 @@ exports.deleteAll = (req, res) => {
         truncate: false
       })
         .then(nums => {
-          res.send({ message: `${nums} Itens foram apagados com sucesso.` });
+          res.send({ message: `${nums} veículos foram apagados com sucesso.` });
         })
         .catch(err => {
           res.status(500).send({
             message:
-              err.message || "Algum erro ocorreu ao tentar apagar todos os itens."
+              err.message || "Algum erro ocorreu ao tentar apagar todos os veículos."
           });
         });
 };
 
-exports.findAllFlammables = (req, res) => {
-    Item.findAll({ where: { isFlammable: true } })
+exports.findAllNews = (req, res) => {
+    Item.findAll({ where: { isNew: true } })
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Algum erro ocorreu ao tentar pesquisar todos os itens inflamáveis."
+          err.message || "Algum erro ocorreu ao tentar pesquisar todos os veículos novos."
       });
     });
+};
+
+exports.findAllManuals = (req, res) => {
+  Item.findAll({ where: { isManual: true } })
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Algum erro ocorreu ao tentar pesquisar todos os veículos de câmbio manual."
+    });
+  });
 };

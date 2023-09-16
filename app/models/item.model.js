@@ -6,10 +6,19 @@ module.exports = (sequelize, Sequelize) => {
       description: {
         type: Sequelize.STRING
       },
+      brand: {
+        type: Sequelize.STRING
+      },
       quantity: {
         type: Sequelize.INTEGER
       },
-      isFlammable: {
+      value: {
+        type: Sequelize.DOUBLE
+      },
+      isNew: {
+        type: Sequelize.BOOLEAN
+      },
+      isManual: {
         type: Sequelize.BOOLEAN
       }
     });
