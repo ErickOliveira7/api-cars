@@ -1,25 +1,25 @@
 module.exports = (sequelize, Sequelize) => {
     const Item = sequelize.define("items", {
-      name: {
-        type: Sequelize.STRING
+      name_vehicle: {
+        type: Sequelize.STRING,
       },
-      description: {
-        type: Sequelize.STRING
+      description_vehicle: {
+        type: Sequelize.STRING,
       },
-      brand: {
-        type: Sequelize.STRING
+      make_vehicle: {
+        type: Sequelize.STRING,
       },
-      quantity: {
-        type: Sequelize.INTEGER
+      quantity_vehicles: {
+        type: Sequelize.INTEGER,
       },
-      value: {
-        type: Sequelize.DOUBLE
+      value_vehicle: {
+        type: Sequelize.DOUBLE,
       },
       isNew: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       isManual: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       }
     });
   

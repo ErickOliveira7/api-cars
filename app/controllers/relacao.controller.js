@@ -3,7 +3,7 @@ const Item = db.items;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
-    if (!req.body.name_vehicle) {
+    if (!req.body.name) {
         res.status(400).send({
           message: "O conteúdo não pode ser vazio!"
         });
@@ -11,13 +11,10 @@ exports.create = (req, res) => {
     }
 
     const item = {
-        name_vehicle: req.body.name_vehicle,
-        description_vehicle: req.body.description_vehicle,
-        make_vehicle: req.body.make_vehicle,
-        quantity_vehicle: req.body.quantity_vehicle,
-        value_vehicle: req.body.value_vehicle,
-        isNew: req.body.isNew ? req.body.isNew : false,
-        isManual: req.body.isManual ? req.body.isManual : false
+        name_factory: req.body.name_factory,
+        address_factory: req.body.address_factory,
+        year_vehicle: req.body.year_vehicle,
+        model_vehicle: req.body.model_vehicle
     };
 
     Item.create(item)
@@ -33,8 +30,8 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    const name_vehicle = req.query.name_vehicle;
-    var condition = name_vehicle ? { name_vehicle: { [Op.iLike]: `%${name_vehicle}%` } } : null;
+    const name_factory = req.query.name_factory;
+    var condition = name_factory ? { name_factory: { [Op.iLike]: `%${name_factory}%` } } : null;
   
     Item.findAll({ where: condition })
       .then(data => {
@@ -132,28 +129,6 @@ exports.deleteAll = (req, res) => {
         });
 };
 
-exports.findAllNews = (req, res) => {
-    Item.findAll({ where: { isNew: true } })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Algum erro ocorreu ao tentar pesquisar todos os veículos novos."
-      });
-    });
-};
 
-exports.findAllManuals = (req, res) => {
-  Item.findAll({ where: { isManual: true } })
-  .then(data => {
-    res.send(data);
-  })
-  .catch(err => {
-    res.status(500).send({
-      message:
-        err.message || "Algum erro ocorreu ao tentar pesquisar todos os veículos de câmbio manual."
-    });
-  });
-};
+
+

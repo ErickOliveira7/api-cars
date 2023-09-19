@@ -23,6 +23,7 @@ db.sequelize.sync()
 });
 
 require("./app/routes/item.routes")(app);
+require("./app/routes/relacao.routes")(app);
 
 app.get("/", (req,res) => {
    res.json({message: 'Hello World!'}) 
