@@ -1,23 +1,24 @@
 const db = require("../models");
-const Item = db.items;
+const Relacao = db.relacoes;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
-    if (!req.body.name) {
+    if (!req.body.nameFactory) {
         res.status(400).send({
           message: "O conteúdo não pode ser vazio!"
         });
         return;
     }
 
-    const item = {
-        name_factory: req.body.name_factory,
-        address_factory: req.body.address_factory,
-        year_vehicle: req.body.year_vehicle,
-        model_vehicle: req.body.model_vehicle
+    const relacao = {
+        carId: req.body.carId,
+        nameFactory: req.body.nameFactory,
+        addressFactory: req.body.addressFactory,
+        yearVehicle: req.body.yearVehicle,
+        modelVehicle: req.body.modelVehicle
     };
 
-    Item.create(item)
+    Relacao.create(relacao)
     .then(data => {
       res.send(data);
     })
@@ -30,10 +31,10 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    const name_factory = req.query.name_factory;
-    var condition = name_factory ? { name_factory: { [Op.iLike]: `%${name_factory}%` } } : null;
+    const nameFactory = req.query.nameFactory;
+    var condition = nameFactory ? { nameFactory: { [Op.iLike]: `%${nameFactory}%` } } : null;
   
-    Item.findAll({ where: condition })
+    Relacao.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })
@@ -48,7 +49,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Item.findByPk(id)
+    Relacao.findByPk(id)
       .then(data => {
         if (data) {
           res.send(data);
@@ -68,7 +69,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    Item.update(req.body, {
+    Relacao.update(req.body, {
       where: { id: id }
     })
       .then(num => {
@@ -92,7 +93,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    Item.destroy({
+    Relacao.destroy({
       where: { id: id }
     })
       .then(num => {
@@ -114,7 +115,7 @@ exports.delete = (req, res) => {
 };
 
 exports.deleteAll = (req, res) => {
-    Item.destroy({
+    Relacao.destroy({
         where: {},
         truncate: false
       })

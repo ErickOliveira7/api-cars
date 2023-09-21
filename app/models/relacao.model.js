@@ -1,22 +1,22 @@
 module.exports = (sequelize, Sequelize) => {
     const Factories = sequelize.define("fabricantes", {
-      car_id: {
+      carId: {
         type: Sequelize.INTEGER,
             references: { 
                 model: 'items',
                 key: 'id'
             }
       },
-      name_factory: {
+      nameFactory: {
         type: Sequelize.STRING,
       },
-      address_factory: {
+      addressFactory: {
         type: Sequelize.STRING,
       },
-      year_vehicle: {
+      yearVehicle: {
         type: Sequelize.INTEGER,
       },
-      model_vehicle: {
+      modelVehicle: {
         type: Sequelize.STRING,
       }
 

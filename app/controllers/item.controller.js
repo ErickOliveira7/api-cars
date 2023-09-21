@@ -3,7 +3,7 @@ const Item = db.items;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
-    if (!req.body.name_vehicle) {
+    if (!req.body.nameVehicle) {
         res.status(400).send({
           message: "O conteúdo não pode ser vazio!"
         });
@@ -11,11 +11,11 @@ exports.create = (req, res) => {
     }
 
     const item = {
-        name_vehicle: req.body.name_vehicle,
-        description_vehicle: req.body.description_vehicle,
-        make_vehicle: req.body.make_vehicle,
-        quantity_vehicle: req.body.quantity_vehicle,
-        value_vehicle: req.body.value_vehicle,
+        nameVehicle: req.body.nameVehicle,
+        descriptionVehicle: req.body.descriptionVehicle,
+        makeVehicle: req.body.makeVehicle,
+        quantityVehicles: req.body.quantityVehicles,
+        valueVehicle: req.body.valueVehicle,
         isNew: req.body.isNew ? req.body.isNew : false,
         isManual: req.body.isManual ? req.body.isManual : false
     };
@@ -33,8 +33,8 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    const name_vehicle = req.query.name_vehicle;
-    var condition = name_vehicle ? { name_vehicle: { [Op.iLike]: `%${name_vehicle}%` } } : null;
+    const nameVehicle = req.query.nameVehicle;
+    var condition = nameVehicle ? { nameVehicle: { [Op.iLike]: `%${nameVehicle}%` } } : null;
   
     Item.findAll({ where: condition })
       .then(data => {
