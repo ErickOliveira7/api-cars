@@ -3,7 +3,7 @@ module.exports = (sequelize, Sequelize) => {
       carId: {
         type: Sequelize.INTEGER,
             references: { 
-                model: 'items',
+                model: 'cars',
                 key: 'id'
             }
       },
@@ -13,13 +13,9 @@ module.exports = (sequelize, Sequelize) => {
       addressFactory: {
         type: Sequelize.STRING,
       },
-      yearVehicle: {
+      yearFactory: {
         type: Sequelize.INTEGER,
-      },
-      modelVehicle: {
-        type: Sequelize.STRING,
       }
-
     });
   
     return Factories; 

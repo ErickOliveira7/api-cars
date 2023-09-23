@@ -1,23 +1,27 @@
 const db = require("../models");
-const Relacao = db.relacoes;
+const Car = db.cars;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
-    if (!req.body.nameFactory) {
+    if (!req.body.nameVehicle) {
         res.status(400).send({
           message: "O conteúdo não pode ser vazio!"
         });
         return;
     }
 
-    const relacao = {
-        carId: req.body.carId,
-        nameFactory: req.body.nameFactory,
-        addressFactory: req.body.addressFactory,
-        yearFactory: req.body.yearFactory
+    const car = {
+        nameVehicle: req.body.nameVehicle,
+        descriptionVehicle: req.body.descriptionVehicle,
+        modelVehicle: req.body.modelVehicle,
+        yearVehicle: req.body.yearVehicle,
+        quantityVehicles: req.body.quantityVehicles,
+        valueVehicle: req.body.valueVehicle,
+        isNew: req.body.isNew ? req.body.isNew : false,
+        isManual: req.body.isManual ? req.body.isManual : false
     };
 
-    Relacao.create(relacao)
+    Car.create(car)
     .then(data => {
       res.send(data);
     })
@@ -30,10 +34,10 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    const nameFactory = req.query.nameFactory;
-    var condition = nameFactory ? { nameFactory: { [Op.iLike]: `%${nameFactory}%` } } : null;
+    const nameVehicle = req.query.nameVehicle;
+    var condition = nameVehicle ? { nameVehicle: { [Op.iLike]: `%${nameVehicle}%` } } : null;
   
-    Relacao.findAll({ where: condition })
+    Car.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })
@@ -48,7 +52,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Relacao.findByPk(id)
+    Car.findByPk(id)
       .then(data => {
         if (data) {
           res.send(data);
@@ -68,7 +72,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    Relacao.update(req.body, {
+    Car.update(req.body, {
       where: { id: id }
     })
       .then(num => {
@@ -92,7 +96,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    Relacao.destroy({
+    Car.destroy({
       where: { id: id }
     })
       .then(num => {
@@ -114,7 +118,7 @@ exports.delete = (req, res) => {
 };
 
 exports.deleteAll = (req, res) => {
-    Relacao.destroy({
+    Car.destroy({
         where: {},
         truncate: false
       })
@@ -129,6 +133,28 @@ exports.deleteAll = (req, res) => {
         });
 };
 
+exports.findAllNews = (req, res) => {
+    Car.findAll({ where: { isNew: true } })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Algum erro ocorreu ao tentar pesquisar todos os veículos novos."
+      });
+    });
+};
 
-
-
+exports.findAllManuals = (req, res) => {
+  Car.findAll({ where: { isManual: true } })
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Algum erro ocorreu ao tentar pesquisar todos os veículos de câmbio manual."
+    });
+  });
+};

@@ -19,7 +19,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.items = require("./item.model.js")(sequelize, Sequelize);
+db.cars = require("./car.model.js")(sequelize, Sequelize);
 db.relacoes = require("./relacao.model.js")(sequelize, Sequelize);
 
 module.exports = db;
