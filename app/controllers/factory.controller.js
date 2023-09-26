@@ -1,5 +1,5 @@
 const db = require("../models");
-const Relacao = db.relacoes;
+const Factory = db.factory;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
@@ -10,14 +10,14 @@ exports.create = (req, res) => {
         return;
     }
 
-    const relacao = {
+    const factory = {
         carId: req.body.carId,
         nameFactory: req.body.nameFactory,
         addressFactory: req.body.addressFactory,
         yearFactory: req.body.yearFactory
     };
 
-    Relacao.create(relacao)
+    Factory.create(factory)
     .then(data => {
       res.send(data);
     })
@@ -33,7 +33,7 @@ exports.findAll = (req, res) => {
     const nameFactory = req.query.nameFactory;
     var condition = nameFactory ? { nameFactory: { [Op.iLike]: `%${nameFactory}%` } } : null;
   
-    Relacao.findAll({ where: condition })
+    Factory.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })
@@ -43,12 +43,19 @@ exports.findAll = (req, res) => {
             err.message || "Algum erro ocorreu ao tentar pesquisar os veículos."
         });
       });
+      carId.findAll({
+        include: [{
+          model: Task,
+          required: true,
+          right: true // has no effect, will create an inner join
+        }]
+      });
 };
 
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Relacao.findByPk(id)
+    Factory.findByPk(id)
       .then(data => {
         if (data) {
           res.send(data);
@@ -68,7 +75,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    Relacao.update(req.body, {
+    Factory.update(req.body, {
       where: { id: id }
     })
       .then(num => {
@@ -92,7 +99,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    Relacao.destroy({
+    Factory.destroy({
       where: { id: id }
     })
       .then(num => {
@@ -114,7 +121,7 @@ exports.delete = (req, res) => {
 };
 
 exports.deleteAll = (req, res) => {
-    Relacao.destroy({
+  Factory.destroy({
         where: {},
         truncate: false
       })

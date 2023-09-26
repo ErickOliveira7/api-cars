@@ -23,7 +23,7 @@ db.sequelize.sync()
 });
 
 require("./app/routes/car.routes")(app);
-require("./app/routes/relacao.routes")(app);
+require("./app/routes/factory.routes")(app);
 
 app.get("/", (req,res) => {
    res.json({message: 'Hello World!'}) 
