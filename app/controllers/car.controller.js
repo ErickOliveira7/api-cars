@@ -12,6 +12,7 @@ exports.create = (req, res) => {
 
     const car = {
         nameVehicle: req.body.nameVehicle,
+        factoryId: req.body.factoryId,
         descriptionVehicle: req.body.descriptionVehicle,
         modelVehicle: req.body.modelVehicle,
         yearVehicle: req.body.yearVehicle,
@@ -88,7 +89,7 @@ exports.update = (req, res) => {
       })
       .catch(err => {
         res.status(500).send({
-          message: "Algum erro ocorreu ao tentar atualizar o item de id=" + id
+          message: "Algum erro ocorreu ao tentar atualizar o veículo de id=" + id
         });
       });
 };

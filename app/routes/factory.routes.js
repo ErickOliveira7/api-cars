@@ -7,6 +7,8 @@ module.exports = app => {
 
     router.get("/", factory.findAll);
 
+    //router.get("/fabricantes-items", fabricantes.findAllFactoriesWithItems);
+
     router.get("/:id", factory.findOne);
 
     router.put("/:id", factory.update);

@@ -11,7 +11,6 @@ exports.create = (req, res) => {
     }
 
     const factory = {
-        carId: req.body.carId,
         nameFactory: req.body.nameFactory,
         addressFactory: req.body.addressFactory,
         yearFactory: req.body.yearFactory
@@ -24,7 +23,7 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Algum erro ocorreu ao tentar adicionar/criar este veículo no sistema."
+          err.message || "Algum erro ocorreu ao tentar adicionar/criar este fabricante no sistema."
       });
     });
 };
@@ -40,15 +39,8 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Algum erro ocorreu ao tentar pesquisar os veículos."
+            err.message || "Algum erro ocorreu ao tentar pesquisar o fabricante/fabricantes."
         });
-      });
-      carId.findAll({
-        include: [{
-          model: Task,
-          required: true,
-          right: true // has no effect, will create an inner join
-        }]
       });
 };
 
@@ -61,13 +53,13 @@ exports.findOne = (req, res) => {
           res.send(data);
         } else {
           res.status(404).send({
-            message: `Não foi possível encontrar o veículo de id=${id}.`
+            message: `Não foi possível encontrar o fabricante de id=${id}.`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Algum erro ocorreu ao tentar encontrar o veículo de id=" + id
+          message: "Algum erro ocorreu ao tentar encontrar o fabricante de id=" + id
         });
       });
 };
@@ -81,17 +73,17 @@ exports.update = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "O veículo foi atualizado."
+            message: "O fabricante foi atualizado."
           });
         } else {
           res.send({
-            message: `Não foi possivel atualizar o veículo de id=${id}.`
+            message: `Não foi possivel atualizar o fabricante de id=${id}.`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Algum erro ocorreu ao tentar atualizar o item de id=" + id
+          message: "Algum erro ocorreu ao tentar atualizar o fabricante de id=" + id
         });
       });
 };
@@ -105,17 +97,17 @@ exports.delete = (req, res) => {
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "O veículo foi apagado com sucesso."
+            message: "O fabricante foi apagado com sucesso."
           });
         } else {
           res.send({
-            message: `Não foi possivel apagar o veículo de id=${id}.`
+            message: `Não foi possivel apagar o fabricante de id=${id}.`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Algum erro ocorreu ao tentar apagar o veículo de id=" + id
+          message: "Algum erro ocorreu ao tentar apagar o fabricante de id=" + id
         });
       });
 };
@@ -126,12 +118,12 @@ exports.deleteAll = (req, res) => {
         truncate: false
       })
         .then(nums => {
-          res.send({ message: `${nums} veículos foram apagados com sucesso.` });
+          res.send({ message: `${nums} fabricantes foram apagados com sucesso.` });
         })
         .catch(err => {
           res.status(500).send({
             message:
-              err.message || "Algum erro ocorreu ao tentar apagar todos os veículos."
+              err.message || "Algum erro ocorreu ao tentar apagar todos os fabricantes."
           });
         });
 };

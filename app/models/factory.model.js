@@ -1,12 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
     const Factories = sequelize.define("fabricantes", {
-      carId: {
-        type: Sequelize.INTEGER,
-            references: { 
-                model: 'cars',
-                key: 'id'
-            }
-      },
       nameFactory: {
         type: Sequelize.STRING,
       },
