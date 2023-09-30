@@ -7,9 +7,11 @@ module.exports = app => {
 
     router.get("/", factory.findAll);
 
-    //router.get("/fabricantes-items", fabricantes.findAllFactoriesWithItems);
+    router.get("/cars", factory.findAllAndCars);
 
     router.get("/:id", factory.findOne);
+
+    router.get("/cars/:id", factory.findOneAndCars);
 
     router.put("/:id", factory.update);
 
@@ -17,5 +19,5 @@ module.exports = app => {
 
     router.delete("/", factory.deleteAll);
 
-    app.use('/api/factory', router);
+    app.use('/api/factories', router);
 };

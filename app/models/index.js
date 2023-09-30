@@ -22,4 +22,11 @@ db.sequelize = sequelize;
 db.cars = require("./car.model.js")(sequelize, Sequelize);
 db.factory = require("./factory.model.js")(sequelize, Sequelize);
 
+db.factory.hasMany(db.cars,{as:'cars'})
+
+db.cars.belongsTo(db.factory,{
+  foreignKey: 'factoryId',
+  as: 'factories'
+})
+
 module.exports = db;

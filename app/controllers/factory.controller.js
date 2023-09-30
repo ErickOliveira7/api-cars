@@ -44,6 +44,22 @@ exports.findAll = (req, res) => {
       });
 };
 
+exports.findAllAndCars = (req, res) => {
+
+  Factory.findAll({
+    include:'cars'
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Algum erro ocorreu ao tentar pesquisar o fabricante e seus carros."
+      });
+    });
+};
+
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
@@ -62,6 +78,26 @@ exports.findOne = (req, res) => {
           message: "Algum erro ocorreu ao tentar encontrar o fabricante de id=" + id
         });
       });
+};
+
+exports.findOneAndCars = (req, res) => {
+  const id = req.params.id;
+
+  Factory.findByPk(id, {include: 'cars'})
+    .then(data => {
+      if (data) {
+        res.send(data);
+      } else {
+        res.status(404).send({
+          message: `Não foi possível encontrar o fabricante de id=${id}.`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Algum erro ocorreu ao tentar encontrar o fabricante de id=" + id
+      });
+    });
 };
 
 exports.update = (req, res) => {
